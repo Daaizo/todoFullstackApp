@@ -1,8 +1,10 @@
 package com.daaizo.todoFullstackApp.todo;
 
 import com.daaizo.todoFullstackApp.user.User;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Table(
         name = "todo_table"
@@ -12,13 +14,10 @@ public class Todo {
     @Id
     @GeneratedValue
     @Column(
+            name = "todo_id",
             updatable = false
     )
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_user_id")
-    private User user;
 
     @Column(
             name = "todo_name",
@@ -31,27 +30,36 @@ public class Todo {
     )
     private String text;
 
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(
             name = "todo_date"
     )
-    private String date;
+    private Date dateTime;
 
-    public User getUser() {
-        return user;
+    @ManyToOne(
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JoinColumn(
+            name = "USER_USER_ID",
+            referencedColumnName = "USER_ID"
+    )
+    private User user;
+
+
+    public Todo(String name, String text) {
+        this.name = name;
+        this.text = text;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public Todo(String name) {
+        this.name = name;
     }
+
 
     public Todo() {
 
-    }
-
-    public Todo(String name, String text, String date) {
-        this.name = name;
-        this.text = text;
-        this.date = date;
     }
 
     @Override
@@ -60,10 +68,9 @@ public class Todo {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", text='" + text + '\'' +
-                ", date=" + date +
+                ", dateTime=" + dateTime +
                 '}';
     }
-
 
     public String getName() {
         return name;
@@ -81,11 +88,17 @@ public class Todo {
         this.text = text;
     }
 
-    public String getDate() {
-        return date;
+    public User getUser() {
+        return user;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setUser(User user) {
+        this.user = user;
     }
+
+    public Date getDateTime() {
+        Date date;
+        return dateTime;
+    }
+
 }
