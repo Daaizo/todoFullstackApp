@@ -37,17 +37,15 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Todo> todos = new ArrayList<>();
 
-    public String getLogin() {
-        return login;
-    }
 
-    public void setLogin(String login) {
+    public User(String name, String login) {
+        this.name = name;
         this.login = login;
     }
 
-    public User(String name) {
+    public User(String login) {
 
-        this.name = name;
+        this.login = login;
     }
 
     public User() {
@@ -59,6 +57,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
+                ", todos=" + todos +
                 '}';
     }
 
@@ -85,5 +84,14 @@ public class User {
     public void setTodos(List<Todo> todos) {
         this.todos = todos;
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
 
 }
