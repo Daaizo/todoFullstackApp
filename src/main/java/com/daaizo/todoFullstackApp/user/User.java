@@ -34,8 +34,12 @@ public class User {
     )
     private String login;
 
-    @OneToMany(mappedBy = "user")
-    private List<Todo> todos = new ArrayList<>();
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            mappedBy = "user"
+    )
+    private List<Todo> todos;
 
 
     public User(String name, String login) {
