@@ -1,6 +1,7 @@
 package com.daaizo.todoFullstackApp.todo;
 
 import com.daaizo.todoFullstackApp.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -37,16 +38,28 @@ public class Todo {
     )
     private Date dateTime;
 
+    @JsonIgnore
     @ManyToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST
     )
     @JoinColumn(
-            name = "USER_USER_ID",
+            name = "USER_ID",
             referencedColumnName = "USER_ID"
+//            ,
+//            nullable = false
     )
     private User user;
 
+    @Override
+    public String toString() {
+        return "Todo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", text='" + text + '\'' +
+                ", dateTime=" + dateTime +
+                '}';
+    }
 
     public Todo(String name, String text) {
         this.name = name;
@@ -58,19 +71,18 @@ public class Todo {
     }
 
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Todo() {
 
     }
 
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", text='" + text + '\'' +
-                ", dateTime=" + dateTime +
-                '}';
-    }
 
     public String getName() {
         return name;
