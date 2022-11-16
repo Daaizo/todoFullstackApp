@@ -1,8 +1,6 @@
 package com.daaizo.todoFullstackApp.todo;
 
-import com.daaizo.todoFullstackApp.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +22,13 @@ public class TodoController {
         return todoService.getTodos();
     }
 
-    @PostMapping
-    public void addTodo(@RequestBody Todo todo) {
+    @PostMapping(path = "/add")
+    public void addTodo(@RequestBody Todo todo, @RequestBody Long userId) {
         //todo add todo ONLY with user
-        todoService.addTodo(todo);
+        todoService.addTodo(todo, userId);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public void deleteTodo(
             @PathVariable("id") Long id
     ) {

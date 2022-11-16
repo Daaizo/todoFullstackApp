@@ -15,17 +15,17 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
+    @GetMapping(path = "/all")
     List<User> getUsers() {
         return userService.getUsers();
     }
 
-    @PostMapping
+    @PostMapping(path = "/add")
     public void registerNewUser(@RequestBody User user) {
         userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "{id}")
+    @DeleteMapping(path = "/delete/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }

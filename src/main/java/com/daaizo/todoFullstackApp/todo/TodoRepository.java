@@ -1,9 +1,11 @@
 package com.daaizo.todoFullstackApp.todo;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface TodoRepository extends CrudRepository<Todo, Long> {
-    List<Todo> findAllByUser_Name(String name);
+@Repository
+public interface TodoRepository extends JpaRepository<Todo, Long> {
+    List<Todo> findAllByUser_login(String login);
 }

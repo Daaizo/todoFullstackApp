@@ -1,6 +1,7 @@
 package com.daaizo.todoFullstackApp.todo;
 
 import com.daaizo.todoFullstackApp.user.User;
+import com.daaizo.todoFullstackApp.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +13,25 @@ import java.util.Optional;
 public class TodoService {
     final
     TodoRepository todoRepository;
+    final
+    UserRepository userRepository;
 
     @Autowired
-    public TodoService(TodoRepository todoRepository) {
+    public TodoService(TodoRepository todoRepository, UserRepository userRepository) {
         this.todoRepository = todoRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Todo> getTodos() {
         return todoRepository.findAll();
     }
 
-    public void addTodo(Todo todo) {
+    public void addTodo(Todo todo, Long userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new IllegalStateException("There is no user with such an id");
+        }
+        todo.setUser(user.get());
         todoRepository.save(todo);
     }
 

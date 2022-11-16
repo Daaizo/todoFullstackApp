@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class TodoRepositoryTest {
 
@@ -18,16 +16,20 @@ class TodoRepositoryTest {
 
     @Test
     void saveTodo() {
-        Todo t1 = new Todo("eat cereals", "maybe with milk");
-
+        Todo t1 = Todo.builder()
+                .name("maybe with milk").
+                text("some text")
+                .build();
         todoRepository.save(t1);
 
     }
 
     @Test
     void saveTodoToNewUser() {
-        Todo t1 = new Todo("eat");
-        t1.setUser(new User("daa12"));
+        Todo t1 = Todo.builder().
+                name("eat").
+                build();
+        t1.setUser(User.builder().name("Daniel").build());
         todoRepository.save(t1);
     }
 

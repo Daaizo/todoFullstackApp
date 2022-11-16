@@ -8,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class UserRepositoryTest {
     @Autowired
@@ -18,7 +16,10 @@ class UserRepositoryTest {
 
     @Test
     void saveUser() {
-        User u1 = new User("daaizo1");
+        User u1 = User.builder().
+                name("daniel").
+                login("daaizo123").
+                build();
         userRepository.save(u1);
 
     }
@@ -27,24 +28,22 @@ class UserRepositoryTest {
     @Test
     void saveTodoToUser() {
 
-        User u1 = new User("cat12");
+        User u1 = User.builder().
+                name("kuba").
+                login("jacob2").
+                build();
         u1.setTodos(List.of(
-                new Todo("eat"),
-                new Todo("sleep")
+                Todo.builder().
+                        name("play games").
+                        user(u1).
+                        build(),
+                Todo.builder().
+                        name("do homework").
+                        user(u1).
+                        build()
         ));
         userRepository.save(u1);
 
-    }
-
-    @Test
-    void saveTodoToUserWithoutTodoCreated() {
-        ///todo -> user id is not added, and it should be not added
-        User u1 = new User("a21");
-        u1.setTodos(List.of(
-                new Todo("wash dishes"),
-                new Todo("clean room")
-        ));
-        userRepository.save(u1);
     }
 
 
